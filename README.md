@@ -49,13 +49,26 @@ O Worker consome essa mensagem.
 Se o ano da moto for 2024, ele efetua o cadastro da moto no banco.
 
 As mensagens são persistidas para consulta posterior.
+
 # 🧱 Arquitetura DDD ( Domain - Driven - Design )
-A arquitetura do projeto foi desenvolvida seguindo o modelo DDD (Domain-Driven Design), com uma separação clara entre services (responsáveis pela lógica de aplicação) e
-repositories (responsáveis pelo acesso e persistência de dados). 
+
+A arquitetura do projeto foi desenvolvida seguindo o modelo DDD (Domain-Driven Design)
+
+Com uma separação clara entre services (responsáveis pela lógica de aplicação) e repositories (responsáveis pelo acesso e persistência de dados). 
+
 Essa abordagem garante melhor organização, manutenção e testabilidade do código, além de favorecer a escalabilidade da aplicação.
 
 # 🧩 Testes Unitários
+
 Está no projeto ManagesMotorcycleRentals.Tests .
+
+# 🌐 Postman
+
+Anexado o arquivo do postman para ajudar [Link Aqui](https://github.com/brendongenssinger/ManagesMotorcycleRentals/tree/master/Postman).
+
+Ou dentro da pasta Postman
+
+
 ____
 ✍️ Autor: Brendon Mascarenhas
 📅 Versão: 1.0.0
