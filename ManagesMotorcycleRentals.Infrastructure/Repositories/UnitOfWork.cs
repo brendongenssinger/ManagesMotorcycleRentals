@@ -7,10 +7,19 @@ namespace ManagesMotorcycleRentals.Infrastructure.Repositories
     {
         private readonly ManagesMotorcyclesRentalsDbContext _context;
         public IMotocyclesRepository MotorcyclesRepository { get; }
-        public UnitOfWork(IMotocyclesRepository motorcyclesRepository, ManagesMotorcyclesRentalsDbContext context)
+        public ICustomerRepository CustomerRepository { get; }
+        public IMotorcyclesAllocationsRepository MotorcyclesAllocationsRepository { get; }
+
+        public UnitOfWork(ManagesMotorcyclesRentalsDbContext context, 
+            IMotocyclesRepository motorcyclesRepository,  
+            ICustomerRepository customerRepository, 
+            IMotorcyclesAllocationsRepository motorcyclesAllocationsRepository
+        )
         {
-            MotorcyclesRepository = motorcyclesRepository;
             _context = context;
+            MotorcyclesRepository = motorcyclesRepository;
+            CustomerRepository = customerRepository;
+            MotorcyclesAllocationsRepository = motorcyclesAllocationsRepository;
         }
 
         public void Dispose()

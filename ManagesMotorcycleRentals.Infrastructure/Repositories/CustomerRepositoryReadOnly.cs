@@ -1,5 +1,7 @@
-﻿using ManagesMotorcycleRentals.Infrastructure.Context;
+﻿using ManagesMotorcycleRentals.Domain.Entities;
+using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManagesMotorcycleRentals.Infrastructure.Repositories
 {
@@ -12,7 +14,14 @@ namespace ManagesMotorcycleRentals.Infrastructure.Repositories
             _context = managesMotorcyclesRentalsDbContext;
         }
 
+        public Customer? GetCustomerByCnpj(string cnpj)
+        {
+            return _context.Customer.AsNoTracking().FirstOrDefault(x => x.Cnpj == cnpj);
+        }
 
-       
+        public Task<Customer> GetCustomerByCnpjAsync(string cnpj, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

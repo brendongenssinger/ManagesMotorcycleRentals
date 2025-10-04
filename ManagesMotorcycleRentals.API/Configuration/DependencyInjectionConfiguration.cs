@@ -1,12 +1,16 @@
-﻿using ManagesMotorcycleRentals.Application.Services.Interfaces;
+﻿using ManagesMotorcycleRentals.Application.Services.Customer;
+using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Motorcycles;
+using ManagesMotorcycleRentals.Application.Services.PlanRentals;
 using ManagesMotorcycleRentals.Application.Services.User;
 using ManagesMotorcycleRentals.Application.Services.Validator;
+using ManagesMotorcycleRentals.Domain.Entities;
 using ManagesMotorcycleRentals.Domain.Shared;
 using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using ManagesMotorcycleRentals.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace ManagesMotorcycleRentals.API.Configuration
 {
@@ -25,21 +29,32 @@ namespace ManagesMotorcycleRentals.API.Configuration
 
             // Services
             services.AddScoped<IMotorcyclesServices, MotorcyclesServices>();
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPlanRentalsService, PlanRentalsService>();
+            
 
             // Repository Read Only
             services.AddScoped<IMotorcyclesRepositoryReadOnly, MotorcyclesRepositoryReadOnly>();
+            services.AddScoped<ICustomerRepositoryReadOnly, CustomerRepositoryReadOnly>();
+            services.AddScoped<IPlanRentaRepositorylReadOnly, PlanRentaRepositorylReadOnly>();
 
-            // Repository 
+
+            // Repository
             services.AddScoped<IMotocyclesRepository, MotorcyclesRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IMotorcyclesAllocationsRepository, MotorcyclesAllocationsRepository>();
+
+            //Unit of Work
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Validator Service
             services.AddScoped<MotorcyclesServicesValidator>();
+            services.AddScoped<CustomerServiceValidator>();
             services.AddScoped<UserServiceValidator>();
 
             //shared
-            services.AddScoped<Notifiable>();
+            services.AddScoped<Notify>();
 
             return services;
         }

@@ -24,6 +24,7 @@ namespace ManagesMotorcycleRentals.Domain.Entities
         public string Model { get; set; }
         [Column("license_plate")]
         public string LicensePlate { get; set; }
+        public MotorcyclesAllocations Rentals { get; set; }
 
     }
 

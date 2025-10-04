@@ -9,11 +9,11 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
 {
     public abstract class ValidatorBase
     {
-        public  readonly Notifiable _notifiable;
+        public  readonly Notify _notification;
 
-        protected ValidatorBase(Notifiable notifiable)
+        protected ValidatorBase(Notify notify)
         {
-            _notifiable = notifiable;
+            _notification = notify;
         }
     }
 }

@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 var builder = Host.CreateApplicationBuilder(args);
 // Consumer 
 builder.Services.AddScoped<IMotocyclesRepository, MotorcyclesRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IMotorcyclesAllocationsRepository, MotorcyclesAllocationsRepository>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMotocycleServiceConsumer, MotocycleServiceConsumer>();
 builder.Services.AddHostedService<MotorcycleConsumer>();

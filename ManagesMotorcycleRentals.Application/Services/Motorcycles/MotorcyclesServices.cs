@@ -19,7 +19,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
                 IMotorcyclesRepositoryReadOnly motorcyclesRepositoryReadOnly, 
                 MotorcyclesServicesValidator motorcyclesServicesValidator,
                 IUnitOfWork unitOfWork,
-                Notifiable notifable) : base(notifable) 
+                Notify notify) : base(notify) 
         {
             _motorcyclesRepositoryReadOnly = motorcyclesRepositoryReadOnly;
             _motorcyclesServicesValidator = motorcyclesServicesValidator;
@@ -30,7 +30,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
             _motorcyclesServicesValidator.ValidePlate(motorCycleDto)
                 .ValideYear(motorCycleDto.Year);
 
-            if (GetNotifiable().HasNotifications) return false;
+            if (GetNotification().HasNotifications) return false;
 
             var motocycle = MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
 
@@ -49,27 +49,29 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
             return true;
         }
 
-        public async Task<List<MotorCycleCreateDto?>> GetMotorcyles(string licensePlate, CancellationToken cancellation)
+        public async Task<List<MotorCycleDtoResponse?>> GetMotorcyles(string licensePlate, CancellationToken cancellation)
         {
             var list = new List<Motorcycle>();
 
             if (string.IsNullOrEmpty(licensePlate))
             {
-                list = await _motorcyclesRepositoryReadOnly.GetMotorCycleAll(cancellation);
-                return list.Select(x => new MotorCycleCreateDto
+                list = await _motorcyclesRepositoryReadOnly.GetMotorCycleAllAsyn(cancellation);
+                return list.Select(x => new MotorCycleDtoResponse
                 {
                     Year = x.Year,
                     Model = x.Model,
-                    LicensePlate = x?.LicensePlate ?? string.Empty
+                    LicensePlate = x?.LicensePlate ?? string.Empty,
+                    Uid = x.Uid
                 }).ToList();
             }
             else
             {
                 var item = await _motorcyclesRepositoryReadOnly
-                    .GetMotorCycleByLicensePlateAsync(licensePlate, cancellation);
-                return new List<MotorCycleCreateDto?>()
+                    .GetMotorCycleByLicensePlateAsync(licensePlate, cancellation) ?? new Motorcycle();
+                
+                return new List<MotorCycleDtoResponse?>()
                 {
-                    new MotorCycleCreateDto
+                    new MotorCycleDtoResponse
                     {
                         Uid = item.Uid,
                         Year = item.Year,

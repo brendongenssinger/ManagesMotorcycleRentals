@@ -5,22 +5,22 @@ namespace ManagesMotorcycleRentals.API.Controllers
 {
     public class ControllerBase : Controller
     {
-        private Notifiable _notifiable;
+        private Notify _notify;
 
-        public ControllerBase(Notifiable notifiable)
+        public ControllerBase(Notify notify)
         {
-            _notifiable = notifiable;
+            _notify = notify;
         }
 
         [NonAction]
         public IActionResult ResponseData(object obj)
         {
-            if (_notifiable.HasNotifications)
+            if (_notify.HasNotifications)
             {
-                return StatusCode(_notifiable.StatusCode, new
+                return StatusCode(_notify.StatusCode, new
                 {
                     success = false,
-                    data = _notifiable.Notifications
+                    data = _notify.Notifications
                 });
             }
             else

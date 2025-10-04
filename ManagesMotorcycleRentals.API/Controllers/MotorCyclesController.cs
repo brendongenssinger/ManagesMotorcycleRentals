@@ -13,7 +13,7 @@ namespace ManagesMotorcycleRentals.API.Controllers
     {
         private IMotorcyclesServices _motorcyclesServices;
 
-        public MotorCyclesController(Notifiable notifiable, IMotorcyclesServices motorcyclesServices) : base(notifiable)
+        public MotorCyclesController(Notify notify, IMotorcyclesServices motorcyclesServices) : base(notify)
         {
             _motorcyclesServices = motorcyclesServices;
         }

@@ -2,11 +2,6 @@
 using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManagesMotorcycleRentals.Infrastructure.Repositories
 {
@@ -26,9 +21,19 @@ namespace ManagesMotorcycleRentals.Infrastructure.Repositories
                 .FirstOrDefaultAsync(m => m.LicensePlate == licensePlate, cancellationToken);
         }
 
-        public async Task<List<Motorcycle?>> GetMotorCycleAll(CancellationToken cancellationToken)
+        public async Task<List<Motorcycle?>> GetMotorCycleAllAsyn(CancellationToken cancellationToken)
         {
             return await _context.Motorcycles.AsNoTracking().ToListAsync(cancellationToken) ??new List<Motorcycle>();
-         }
+        }
+
+        public async Task<Motorcycle?> GetMotorCycleByUidAsync(Guid uid, CancellationToken cancellationToken)
+        {
+            return await _context.Motorcycles.AsNoTracking().Where(x => x.Uid == uid).FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public Motorcycle? GetMotorCycleByUid(Guid uid)
+        {
+            return _context.Motorcycles.AsNoTracking().Where(x => x.Uid == uid).FirstOrDefault();
+        }
     }
 }

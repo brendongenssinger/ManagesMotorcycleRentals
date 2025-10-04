@@ -10,6 +10,7 @@ namespace ManagesMotorcycleRentals.Infrastructure.Interfaces
     {
         IMotocyclesRepository MotorcyclesRepository { get; }
         ICustomerRepository CustomerRepository { get; }
+        IMotorcyclesAllocationsRepository MotorcyclesAllocationsRepository { get; }
         Task<int> SaveChangeAsync(CancellationToken cancellationToken);
     }
 }

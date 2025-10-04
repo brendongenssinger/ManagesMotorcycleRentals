@@ -9,7 +9,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
     public class MotorcyclesServicesValidator: ValidatorBase
     {
         private IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
-        public MotorcyclesServicesValidator(IMotorcyclesRepositoryReadOnly motorcyclesRepositoryReadOnly, Notifiable notifiable) : base(notifiable)
+        public MotorcyclesServicesValidator(IMotorcyclesRepositoryReadOnly motorcyclesRepositoryReadOnly, Notify notify) : base(notify)
         {
             _motorcyclesRepositoryReadOnly = motorcyclesRepositoryReadOnly;
         }
@@ -19,9 +19,9 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
                     .GetMotorCycleByLicensePlateAsync(
                            motorCycleDto.LicensePlate, cancellationToken);
 
-            var teste = await _motorcyclesRepositoryReadOnly.GetMotorCycleAll(cancellationToken);
+            var teste = await _motorcyclesRepositoryReadOnly.GetMotorCycleAllAsyn(cancellationToken);
             if(motorCycle != null)
-                _notifiable.AddNotification("motorCycle", "Motorcycle already exists");
+                _notification.AddNotification("motorCycle", "Motorcycle already exists");
 
             return await Task.Run(() => this);
         }
@@ -30,9 +30,9 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
         {
 
             if(string.IsNullOrEmpty(motorCycleDto.LicensePlate))
-                _notifiable.AddNotification("LicensePlate", "License Plate is required");
+                _notification.AddNotification("LicensePlate", "License Plate is required");
             else if(motorCycleDto.LicensePlate.Length < 7)
-                _notifiable.AddNotification("LicensePlate", "License Plate must be 7 characters long");
+                _notification.AddNotification("LicensePlate", "License Plate must be 7 characters long");
 
             ValidCreateMotorcycle(motorCycleDto, CancellationToken.None).Wait();            
 
@@ -43,7 +43,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
         public MotorcyclesServicesValidator ValideYear(int year)
         {
             if(year < 1900 || year > DateTime.Now.Year +1)
-                _notifiable.AddNotification("Year", "Year is invalid");
+                _notification.AddNotification("Year", "Year is invalid");
             return this;
         }
     }

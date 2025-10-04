@@ -10,7 +10,7 @@ namespace ManagesMotorcycleRentals.Domain.Entities
     {
         [Key]
         [Column("id")]
-        public long Id { get; set; }
+        public long Id { get; private set; }
         [Column("uid")]
         public Guid Uid { get; set; }
         [Column("name")]
@@ -28,7 +28,10 @@ namespace ManagesMotorcycleRentals.Domain.Entities
 
         [Column("url_document_image")]
         public string UrlDocumentImage { get; set; }
-        public MotorcyclesAllocations Rentals { get; set; }
+        [ForeignKey("MotorCycleAllocationsId")]
+        public MotorcyclesAllocations MotorcyclesAllocations { get; set; }
+        [Column("motorcycles_allocation_id")]
+        public long? MotorCycleAllocationsId { get; set; }
     }
 
     public static class CustomerFactory
@@ -40,7 +43,7 @@ namespace ManagesMotorcycleRentals.Domain.Entities
                 Uid = Guid.NewGuid(),
                 Name = name,
                 Cnpj = cnpj,
-                DateOfBirth = dateOfBirth,
+                DateOfBirth = dateOfBirth.ToUniversalTime(),
                 NumberDocument = numberDocument,
                 TypeDocument = typeDocument,
                 UrlDocumentImage = urlDocumentImage

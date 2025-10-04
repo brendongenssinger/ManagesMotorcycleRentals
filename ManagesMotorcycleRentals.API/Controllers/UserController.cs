@@ -11,7 +11,7 @@ namespace ManagesMotorcycleRentals.API.Controllers
     {
         private IUserService _userService;
 
-        public UserController(Notifiable notifiable, IUserService userService) : base(notifiable)
+        public UserController(Notify notify, IUserService userService) : base(notify)
         {
             _userService = userService;
         }

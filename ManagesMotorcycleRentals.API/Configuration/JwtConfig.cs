@@ -40,7 +40,7 @@ namespace ManagesMotorcycleRentals.API.Configuration
                     },
                     OnForbidden = context =>
                     {
-                        Console.WriteLine("Token forbidden: " + context.Principal.Identities);
+                        Console.WriteLine("Token forbidden: ");
                         return Task.CompletedTask;
                     },
                     OnMessageReceived = context =>

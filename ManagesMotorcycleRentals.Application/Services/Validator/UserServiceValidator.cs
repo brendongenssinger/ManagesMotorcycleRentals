@@ -4,7 +4,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
 {
     public class UserServiceValidator : ValidatorBase
     {
-        public UserServiceValidator(Notifiable notifiable) : base(notifiable)
+        public UserServiceValidator(Notify notify) : base(notify)
         {
           
         }
@@ -12,7 +12,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
         {
             if (userId <= 0)
             {
-                _notifiable.AddNotification("UserId", "User ID must be greater than zero.");
+                _notification.AddNotification("UserId", "User ID must be greater than zero.");
             }
 
             return this;
@@ -21,7 +21,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Validator
         public UserServiceValidator ValidRole(string role)
         {
             if(role !=  "admin" && role != "user")
-                _notifiable.AddNotification("Role", "Role must be either 'admin' or 'user'.");
+                _notification.AddNotification("Role", "Role must be either 'admin' or 'user'.");
             return this;
         }
     }
