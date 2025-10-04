@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "1346cd95-4800-475e-b0eb-cafb33c23327",
+		"name": "Motocycle",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "549298"
+	},
+	"item": [
+		{
+			"name": "motorcycle",
+			"item": [
+				{
+					"name": "motorcycle/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-adm}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxODA5NywiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.IlBh2E6XPe-_HkCDp0m_BTbqCCbYh4C4pFj9PV-_bE8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5064/api/v1/motorcycle/create"
+					},
+					"response": []
+				},
+				{
+					"name": "motorcycle/list/licence-plate?licensePlate=NFT-2226",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-adm}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxODA5NywiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.IlBh2E6XPe-_HkCDp0m_BTbqCCbYh4C4pFj9PV-_bE8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2226\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5064/api/v1/motorcycle/list/licence-plate?licensePlate=NFT-2224",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5064",
+							"path": [
+								"api",
+								"v1",
+								"motorcycle",
+								"list",
+								"licence-plate"
+							],
+							"query": [
+								{
+									"key": "licensePlate",
+									"value": "NFT-2224"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "motorcycle/list/licence-plate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-adm}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxODA5NywiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.IlBh2E6XPe-_HkCDp0m_BTbqCCbYh4C4pFj9PV-_bE8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2226\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5064/api/v1/motorcycle/list/licence-plate"
+					},
+					"response": []
+				},
+				{
+					"name": "motorcycle/update/licence-plate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-adm}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxODA5NywiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.IlBh2E6XPe-_HkCDp0m_BTbqCCbYh4C4pFj9PV-_bE8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"licensePlate\" : \"NFT-2222\",\r\n    \"newLicensePlate\": \"NFT-2224\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5064/api/v1/motorcycle/update/licence-plate"
+					},
+					"response": []
+				},
+				{
+					"name": "motorcycle/update/licence-plate Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-adm}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxODA5NywiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.IlBh2E6XPe-_HkCDp0m_BTbqCCbYh4C4pFj9PV-_bE8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"licensePlate\" : \"NFT-2224\",\r\n    \"newLicensePlate\": \"NFT-2224\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5064/api/v1/motorcycle/delete/613e4922-68b3-4bea-934e-62cbf4d7580c"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "customer/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-user}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Brendon 2",
+									"type": "text"
+								},
+								{
+									"key": "cnpj",
+									"value": "06473503000160",
+									"type": "text"
+								},
+								{
+									"key": "cnhNumber",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "CnhImageFormData",
+									"type": "file",
+									"src": "/C:/Users/brend/Downloads/20250501_1451_Rapper Barbudo Brasileiro_simple_compose_01jt6ffperffnbyq5eqdywe0t7.png"
+								},
+								{
+									"key": "CnhType",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "BirthDate",
+									"value": "1994-11-13",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:5064/api/v1/customer/create"
+					},
+					"response": []
+				},
+				{
+					"name": "customer/create-rental",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token-user}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cnpj\":\"06473503000160\",\r\n    \"motorcycleUId\":\"e1a6b613-5596-4f7d-8d80-85f7f4fe1208\",\r\n    \"planRentalUId\":\"84c0ab8e-38d3-4221-ab0a-e61cee9a0638\",\r\n    \"rentalEndDate\":\"2025-10-15\",\r\n    \"expectedReturnDate\":\"2025-10-21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5064/api/v1/customer/create-rental"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "plans-rentals",
+			"item": [
+				{
+					"name": "plansrentals/all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJ1c2VyIiwiZXhwIjoxNzU5NjEwMTYxLCJpc3MiOiJodHRwczovL2FwaS1icmVuZG9uLmNvbSIsImF1ZCI6Imh0dHA6Ly90ZXN0ZS1icmVuZG9uLmFwaSJ9._-WzpwiIWYk_b4c8sENxJJzM-_uqlJOCOV4A95rkyHU"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": "http://localhost:5064/api/v1/plansrentals/all"
+					},
+					"response": []
+				},
+				{
+					"name": "plansrentals/{Uid}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJ1c2VyIiwiZXhwIjoxNzU5NjEwMTYxLCJpc3MiOiJodHRwczovL2FwaS1icmVuZG9uLmNvbSIsImF1ZCI6Imh0dHA6Ly90ZXN0ZS1icmVuZG9uLmFwaSJ9._-WzpwiIWYk_b4c8sENxJJzM-_uqlJOCOV4A95rkyHU"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": "http://localhost:5064/api/v1/plansrentals/a0ddc745-be2f-4139-9718-7d642c2502d9"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"role\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5064/user/login"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTc1OTQxNDQ5OSwiaXNzIjoiaHR0cHM6Ly9hcGktYnJlbmRvbi5jb20iLCJhdWQiOiJodHRwOi8vdGVzdGUtYnJlbmRvbi5hcGkifQ.5IGJFksOg7mYK_nGj6fkSkEXYlj8dx_Aku5UHa9YPAM"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token-adm",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token-user",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

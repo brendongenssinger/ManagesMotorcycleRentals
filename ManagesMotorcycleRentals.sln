@@ -25,6 +25,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagesMotorcycleRentals.Wo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagesMotorcycleRentals.Tests", "ManagesMotorcycleRentals.Tests\ManagesMotorcycleRentals.Tests.csproj", "{03EA9299-C96A-459C-B93D-0CF61398BFF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{3CDDA217-17A3-4164-9A07-1D2CFD73EA23}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\Motocycle.postman_collection_v2.1.json = ..\..\..\Downloads\Motocycle.postman_collection_v2.1.json
+		..\..\..\Downloads\Motocycle.postman_collection_v2.json = ..\..\..\Downloads\Motocycle.postman_collection_v2.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
