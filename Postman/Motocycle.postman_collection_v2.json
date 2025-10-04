@@ -29,14 +29,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2222\"\r\n}",
+							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2229\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:5064/api/v1/motorcycle/create"
+						"url": "http://localhost:5000/api/v1/motorcycle/create"
 					},
 					"response": []
 				},
@@ -124,7 +124,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:5064/api/v1/motorcycle/list/licence-plate"
+						"url": "http://localhost:5000/api/v1/motorcycle/list/licence-plate"
 					},
 					"response": []
 				},
@@ -155,7 +155,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:5064/api/v1/motorcycle/update/licence-plate"
+						"url": "http://localhost:5000/api/v1/motorcycle/update/licence-plate"
 					},
 					"response": []
 				},
@@ -186,7 +186,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:5064/api/v1/motorcycle/delete/613e4922-68b3-4bea-934e-62cbf4d7580c"
+						"url": "http://localhost:5000/api/v1/motorcycle/delete/613e4922-68b3-4bea-934e-62cbf4d7580c"
 					},
 					"response": []
 				}
@@ -241,7 +241,7 @@
 								}
 							]
 						},
-						"url": "http://localhost:5064/api/v1/customer/create"
+						"url": "http://localhost:5000/api/v1/customer/create"
 					},
 					"response": []
 				},
@@ -265,7 +265,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:5064/api/v1/customer/create-rental"
+						"url": "http://localhost:5000/api/v1/customer/create-rental"
 					},
 					"response": []
 				}
@@ -290,7 +290,7 @@
 								"value": "*/*"
 							}
 						],
-						"url": "http://localhost:5064/api/v1/plansrentals/all"
+						"url": "http://localhost:5000/api/v1/plansrentals/all"
 					},
 					"response": []
 				},
@@ -310,7 +310,7 @@
 								"value": "*/*"
 							}
 						],
-						"url": "http://localhost:5064/api/v1/plansrentals/a0ddc745-be2f-4139-9718-7d642c2502d9"
+						"url": "http://localhost:5000/api/v1/plansrentals/a0ddc745-be2f-4139-9718-7d642c2502d9"
 					},
 					"response": []
 				}
@@ -323,14 +323,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\":1,\r\n    \"role\":\"user\"\r\n}",
+					"raw": "{\r\n    \"id\":1,\r\n    \"role\":\"admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:5064/user/login"
+				"url": "http://localhost:5000/user/login"
 			},
 			"response": []
 		}

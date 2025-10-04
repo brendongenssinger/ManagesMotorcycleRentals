@@ -9,6 +9,9 @@ COPY ManagesMotorcycleRentals.Domain/*.csproj ManagesMotorcycleRentals.Domain/
 COPY ManagesMotorcycleRentals.Infrastructure/*.csproj ManagesMotorcycleRentals.Infrastructure/
 COPY ManagesMotorcycleRentals.Services/*.csproj ManagesMotorcycleRentals.Services/
 COPY ManagesMotorcycleRentals.DTOs/*.csproj ManagesMotorcycleRentals.DTOs/
+COPY ManagesMotorcycleRentals.Worker/* ManagesMotorcycleRentals.Worker/
+COPY ManagesMotorcycleRentals.Tests/* ManagesMotorcycleRentals.Tests/
+
 
 # Restaura dependências
 RUN dotnet restore "ManagesMotorcycleRentals.sln"

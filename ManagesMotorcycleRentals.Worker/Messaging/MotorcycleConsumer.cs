@@ -21,8 +21,23 @@ namespace ManagesMotorcycleRentals.API.Messaging
         }
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost", Port = 5672, UserName = "admin", Password="admin123" };
-            await using var connection = await factory.CreateConnectionAsync(stoppingToken);
+            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672, UserName = "admin", Password="admin123" };
+            IConnection connection = null;
+
+            while (true)
+            {
+                try
+                {
+                    connection = await factory.CreateConnectionAsync(stoppingToken);
+                    if(connection.IsOpen) break;
+                }
+                catch (Exception)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(3));
+
+                }
+            }
+           
             await using var channel = await connection.CreateChannelAsync();
 
             await channel.QueueDeclareAsync(

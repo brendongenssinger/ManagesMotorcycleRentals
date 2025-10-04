@@ -33,7 +33,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2222\"\r\n}",
+							"raw": "{\r\n    \"year\":2024,\r\n    \"model\":\"Honda\",\r\n    \"licensePlate\" : \"NFT-2229\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,12 +41,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/motorcycle/create",
+							"raw": "http://localhost:5000/api/v1/motorcycle/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -150,12 +150,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/motorcycle/list/licence-plate",
+							"raw": "http://localhost:5000/api/v1/motorcycle/list/licence-plate",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -199,12 +199,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/motorcycle/update/licence-plate",
+							"raw": "http://localhost:5000/api/v1/motorcycle/update/licence-plate",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -248,12 +248,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/motorcycle/delete/613e4922-68b3-4bea-934e-62cbf4d7580c",
+							"raw": "http://localhost:5000/api/v1/motorcycle/delete/613e4922-68b3-4bea-934e-62cbf4d7580c",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -321,12 +321,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/customer/create",
+							"raw": "http://localhost:5000/api/v1/customer/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -362,12 +362,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5064/api/v1/customer/create-rental",
+							"raw": "http://localhost:5000/api/v1/customer/create-rental",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -404,12 +404,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5064/api/v1/plansrentals/all",
+							"raw": "http://localhost:5000/api/v1/plansrentals/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -441,12 +441,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5064/api/v1/plansrentals/a0ddc745-be2f-4139-9718-7d642c2502d9",
+							"raw": "http://localhost:5000/api/v1/plansrentals/a0ddc745-be2f-4139-9718-7d642c2502d9",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5064",
+							"port": "5000",
 							"path": [
 								"api",
 								"v1",
@@ -466,7 +466,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\":1,\r\n    \"role\":\"user\"\r\n}",
+					"raw": "{\r\n    \"id\":1,\r\n    \"role\":\"admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -474,12 +474,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5064/user/login",
+					"raw": "http://localhost:5000/user/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5064",
+					"port": "5000",
 					"path": [
 						"user",
 						"login"

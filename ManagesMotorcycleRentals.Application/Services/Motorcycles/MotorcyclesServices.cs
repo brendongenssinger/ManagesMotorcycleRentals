@@ -34,7 +34,7 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 
             var motocycle = MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
 
-            var factory = new ConnectionFactory() { HostName = "localhost", Port = 5672, UserName = "admin", Password = "admin123" };
+            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672, UserName = "admin", Password = "admin123" };
 
 
             using var connection = await factory.CreateConnectionAsync(cancellationToken);

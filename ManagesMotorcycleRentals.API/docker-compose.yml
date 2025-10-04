@@ -48,26 +48,43 @@ services:
     networks:
       - motodelivery-net
 
-  # motodelivery-api:
-  #   build:
-  #     context: ..
-  #     dockerfile: ManagesMotorcycleRentals.API/Dockerfile
-  #   container_name: motodelivery_api
-  #   depends_on:
-  #     - postgres
-  #     - mongodb
-  #     - rabbitmq
-  #   ports:
-  #     - "5000:8080"  # API acess�vel em http://localhost:5000
-  #   environment:
-  #     ASPNETCORE_URLS: http://+:8080
-  #     ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=motodelivery;Username=admin;Password=admin123"
-  #     ConnectionStrings__Mongo: "mongodb://mongodb:27017"
-  #     RabbitMq__Host: "rabbitmq"
-  #     RabbitMq__User: "admin"
-  #     RabbitMq__Pass: "admin123"
-  #   networks:
-  #     - motodelivery-net
+  motodelivery-api:
+    build:
+      context: ..
+      dockerfile: ManagesMotorcycleRentals.API/Dockerfile
+    container_name: motodelivery_api
+    depends_on:
+      - postgres
+      - mongodb
+      - rabbitmq
+    ports:
+      - "5000:8080"  # API acess�vel em http://localhost:5000
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Host=postgres_db2;Port=5432;Database=motodelivery;Username=admin;Password=admin123"
+      ConnectionStrings__Mongo: "mongodb://mongodb:27017"
+      RabbitMq__Host: "rabbitmq"
+      RabbitMq__User: "admin"
+      RabbitMq__Pass: "admin123"
+    networks:
+      - motodelivery-net
+
+  motodelivery-worker:
+    build:
+      context: ..
+      dockerfile: ManagesMotorcycleRentals.Worker/Dockerfile
+    container_name: motodelivery_worker
+    depends_on:
+      - postgres      
+      - rabbitmq    
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Host=postgres_db2;Port=5432;Database=motodelivery;Username=admin;Password=admin123"      
+      RabbitMq__Host: "rabbitmq"
+      RabbitMq__User: "admin"
+      RabbitMq__Pass: "admin123"
+    networks:
+      - motodelivery-net
 
 networks:
   motodelivery-net:
