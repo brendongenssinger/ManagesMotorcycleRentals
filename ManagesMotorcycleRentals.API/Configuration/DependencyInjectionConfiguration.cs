@@ -9,6 +9,7 @@ using ManagesMotorcycleRentals.Domain.Shared;
 using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using ManagesMotorcycleRentals.Infrastructure.Repositories;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
@@ -55,6 +56,21 @@ namespace ManagesMotorcycleRentals.API.Configuration
 
             //shared
             services.AddScoped<Notify>();
+
+            //rabbitMQ
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(configuration.GetSection("RabbitMQ:Host").Value, h =>
+                    //cfg.Host("localhost", h =>
+                    {
+                        h.Username(configuration.GetSection("RabbitMQ:User").Value ?? string.Empty);
+                        h.Password(configuration.GetSection("RabbitMQ:User").Value ?? string.Empty);
+                    });                    
+                });
+            });
 
             return services;
         }

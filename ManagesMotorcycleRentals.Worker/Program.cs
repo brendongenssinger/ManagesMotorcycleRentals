@@ -7,8 +7,12 @@ using ManagesMotorcycleRentals.Infrastructure.Repositories;
 using ManagesMotorcycleRentals.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using MassTransit;
+using System.Runtime;
+using RabbitMQ.Client;
+using RabbitMQ;
 var builder = Host.CreateApplicationBuilder(args);
+    
 // Consumer 
 builder.Services.AddScoped<IMotocyclesRepository, MotorcyclesRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -16,7 +20,42 @@ builder.Services.AddScoped<IMotorcyclesAllocationsRepository, MotorcyclesAllocat
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMotocycleServiceConsumer, MotocycleServiceConsumer>();
-builder.Services.AddHostedService<MotorcycleConsumer>();
+
+builder.Services.Configure<MassTransitHostOptions>(options =>
+{
+    options.WaitUntilStarted = true;
+    options.StartTimeout = TimeSpan.FromSeconds(30);
+    options.StopTimeout = TimeSpan.FromMinutes(1);
+});
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<MotorcycleConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        //cfg.Host("rabbitmq", h =>
+        cfg.Host(builder.Configuration.GetSection("RabbitMq:Host").Value, h =>
+        {
+            h.Username(builder.Configuration.GetSection("RabbitMq:User").Value);
+            h.Password(builder.Configuration.GetSection("RabbitMq:Password").Value);            
+        });
+        
+        cfg.ReceiveEndpoint("motorcycles", e =>
+        {
+            e.UseConcurrencyLimit(1);
+            e.UseRateLimit(50, TimeSpan.FromMinutes(1));            
+            e.UseKillSwitch(options => options
+                .SetActivationThreshold(10)
+                .SetTripThreshold(0.15)
+                .SetRestartTimeout(m: 1)
+            );
+
+            e.ConfigureConsumer<MotorcycleConsumer>(context);
+        });
+    });
+});
+
 
 //Connection String
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

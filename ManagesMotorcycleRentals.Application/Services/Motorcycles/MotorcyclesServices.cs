@@ -1,11 +1,11 @@
-﻿using ManagesMotorcycleRentals.Application.Services.Interfaces;
+﻿using ManagesMotorcycleRentals.API.Messaging.Model;
+using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Validator;
 using ManagesMotorcycleRentals.Domain.Entities;
 using ManagesMotorcycleRentals.Domain.Shared;
 using ManagesMotorcycleRentals.DTOs;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
-using RabbitMQ.Client;
-using System.Text;
+using MassTransit;
 
 namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 {
@@ -14,16 +14,19 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
         private IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
         private MotorcyclesServicesValidator _motorcyclesServicesValidator;
         private IUnitOfWork _unitOfWork;
+        private readonly IBus _bus;
 
         public MotorcyclesServices(
                 IMotorcyclesRepositoryReadOnly motorcyclesRepositoryReadOnly, 
                 MotorcyclesServicesValidator motorcyclesServicesValidator,
                 IUnitOfWork unitOfWork,
+                IBus bus,
                 Notify notify) : base(notify) 
         {
             _motorcyclesRepositoryReadOnly = motorcyclesRepositoryReadOnly;
             _motorcyclesServicesValidator = motorcyclesServicesValidator;
             _unitOfWork = unitOfWork;
+            _bus = bus;
         }
         public async Task<bool> CreateMotorcycleAsync(MotorCycleCreateDto motorCycleDto, CancellationToken cancellationToken)
         {
@@ -32,19 +35,19 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 
             if (GetNotification().HasNotifications) return false;
 
-            var motocycle = MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
+            var motocycle = new MotorcycleMessage()
+            {
+                Id = Guid.NewGuid(),
+                LicensePlate = motorCycleDto.LicensePlate, 
+                Model = motorCycleDto.Model, 
+                Year = motorCycleDto.Year
+            };
 
-            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672, UserName = "admin", Password = "admin123" };
+            //MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
 
+            var queue = await _bus.GetSendEndpoint(new Uri("queue:motorcycles"));
 
-            using var connection = await factory.CreateConnectionAsync(cancellationToken);
-            using var channel = await connection.CreateChannelAsync();
-
-            await channel.QueueDeclareAsync(queue: "motorcycles", durable: false, exclusive: false, autoDelete: false);
-
-            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(motocycle));
-
-            await channel.BasicPublishAsync(exchange: "",  routingKey: "motorcycles",body,cancellationToken);
+            await queue.Send(motocycle, cancellationToken);
 
             return true;
         }
