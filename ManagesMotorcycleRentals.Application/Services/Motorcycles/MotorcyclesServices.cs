@@ -1,4 +1,5 @@
 ﻿using ManagesMotorcycleRentals.API.Messaging.Model;
+using ManagesMotorcycleRentals.Application.DTOs;
 using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Validator;
 using ManagesMotorcycleRentals.Domain.Entities;
@@ -11,9 +12,10 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 {
     public class MotorcyclesServices : ServiceBase, IMotorcyclesServices
     {
-        private IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
-        private MotorcyclesServicesValidator _motorcyclesServicesValidator;
-        private IUnitOfWork _unitOfWork;
+        private readonly IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
+        private readonly MotorcyclesServicesValidator _motorcyclesServicesValidator;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly IBus _bus;
 
         public MotorcyclesServices(
@@ -21,12 +23,14 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
                 MotorcyclesServicesValidator motorcyclesServicesValidator,
                 IUnitOfWork unitOfWork,
                 IBus bus,
+                IPublishEndpoint publishEndpoint,
                 Notify notify) : base(notify) 
         {
             _motorcyclesRepositoryReadOnly = motorcyclesRepositoryReadOnly;
             _motorcyclesServicesValidator = motorcyclesServicesValidator;
             _unitOfWork = unitOfWork;
             _bus = bus;
+            _publishEndpoint = publishEndpoint;
         }
         public async Task<bool> CreateMotorcycleAsync(MotorCycleCreateDto motorCycleDto, CancellationToken cancellationToken)
         {
@@ -35,19 +39,10 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 
             if (GetNotification().HasNotifications) return false;
 
-            var motocycle = new MotorcycleMessage()
-            {
-                Id = Guid.NewGuid(),
-                LicensePlate = motorCycleDto.LicensePlate, 
-                Model = motorCycleDto.Model, 
-                Year = motorCycleDto.Year
-            };
+            var motocycle = new MotorcycleCreatedEventDto(Guid.NewGuid(), motorCycleDto.LicensePlate, motorCycleDto.Year, motorCycleDto.Model);
+            
 
-            //MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
-
-            var queue = await _bus.GetSendEndpoint(new Uri("queue:motorcycles"));
-
-            await queue.Send(motocycle, cancellationToken);
+            await _publishEndpoint.Publish(motocycle, motocycle.GetType(), cancellationToken);
 
             return true;
         }

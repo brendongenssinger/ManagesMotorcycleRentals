@@ -63,11 +63,10 @@ namespace ManagesMotorcycleRentals.API.Configuration
                 x.SetKebabCaseEndpointNameFormatter();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(configuration.GetSection("RabbitMQ:Host").Value, h =>
-                    //cfg.Host("localhost", h =>
+                    cfg.Host(configuration.GetSection("RabbitMQ:Host").Value ?? string.Empty, h =>                    
                     {
                         h.Username(configuration.GetSection("RabbitMQ:User").Value ?? string.Empty);
-                        h.Password(configuration.GetSection("RabbitMQ:User").Value ?? string.Empty);
+                        h.Password(configuration.GetSection("RabbitMQ:Password").Value ?? string.Empty);                        
                     });                    
                 });
             });

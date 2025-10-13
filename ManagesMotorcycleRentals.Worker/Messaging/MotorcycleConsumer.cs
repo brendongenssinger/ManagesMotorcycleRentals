@@ -9,8 +9,6 @@ namespace ManagesMotorcycleRentals.API.Messaging
     {
         private IMotocycleServiceConsumer _motorcycleServiceConsumer;
 
-
-
         public MotorcycleConsumer(IMotocycleServiceConsumer motocycleServiceConsumer)
         {
             _motorcycleServiceConsumer = motocycleServiceConsumer;

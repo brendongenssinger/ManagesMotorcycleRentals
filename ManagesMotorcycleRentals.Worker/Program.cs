@@ -4,13 +4,10 @@ using ManagesMotorcycleRentals.Application.Services.Motorcycles;
 using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using ManagesMotorcycleRentals.Infrastructure.Repositories;
-using ManagesMotorcycleRentals.Worker;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using ManagesMotorcycleRentals.Worker.Event;
 using MassTransit;
-using System.Runtime;
-using RabbitMQ.Client;
-using RabbitMQ;
+using MassTransit.Transports.Fabric;
+using Microsoft.EntityFrameworkCore;
 var builder = Host.CreateApplicationBuilder(args);
     
 // Consumer 
@@ -32,6 +29,8 @@ builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<MotorcycleConsumer>();
 
+   
+
     x.UsingRabbitMq((context, cfg) =>
     {
         //cfg.Host("rabbitmq", h =>
@@ -52,6 +51,11 @@ builder.Services.AddMassTransit(x =>
             );
 
             e.ConfigureConsumer<MotorcycleConsumer>(context);
+        });
+
+        cfg.Message<MotorcycleCreatedEvent>(m =>
+        {
+            m.SetEntityName("moto.delivery.topic");
         });
     });
 });
