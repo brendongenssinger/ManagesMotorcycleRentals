@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ManagesMotorcycleRentals.API/minio-data/.minio.sys/buckets
+/ManagesMotorcycleRentals.API/minio-data
