@@ -1,10 +1,12 @@
 using ManagesMotorcycleRentals.API.Messaging;
+using ManagesMotorcycleRentals.Application.DTOs;
 using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Motorcycles;
 using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using ManagesMotorcycleRentals.Infrastructure.Repositories;
-using ManagesMotorcycleRentals.Worker.Event;
+using ManagesMotorcycleRentals.Worker.Consumer.Command;
+using ManagesMotorcycleRentals.Worker.Consumer.Events;
 using MassTransit;
 using MassTransit.Transports.Fabric;
 using Microsoft.EntityFrameworkCore;
@@ -27,12 +29,15 @@ builder.Services.Configure<MassTransitHostOptions>(options =>
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<MotorcycleConsumer>();
+    x.AddConsumer<MotorcycleConsumer>();    
+    x.AddConsumer<MotorcycleCreatedEvent>();
+    x.AddConsumer<MotorcycleCreatedEvent2>();
+    x.AddConsumer<MotorcycleCreatedEvent3>();
 
-   
 
     x.UsingRabbitMq((context, cfg) =>
     {
+
         //cfg.Host("rabbitmq", h =>
         cfg.Host(builder.Configuration.GetSection("RabbitMq:Host").Value, h =>
         {
@@ -53,10 +58,45 @@ builder.Services.AddMassTransit(x =>
             e.ConfigureConsumer<MotorcycleConsumer>(context);
         });
 
-        cfg.Message<MotorcycleCreatedEvent>(m =>
+        cfg.ReceiveEndpoint(e =>
         {
-            m.SetEntityName("moto.delivery.topic");
+            e.UseConcurrencyLimit(1);
+            e.UseRateLimit(50, TimeSpan.FromMinutes(1));
+            e.UseKillSwitch(options => options
+                .SetActivationThreshold(10)
+                .SetTripThreshold(0.15)
+                .SetRestartTimeout(m: 1)
+            );
+
+            e.ConfigureConsumer<MotorcycleCreatedEvent>(context);
         });
+
+        cfg.ReceiveEndpoint(e =>
+        {
+            e.UseConcurrencyLimit(1);
+            e.UseRateLimit(50, TimeSpan.FromMinutes(1));
+            e.UseKillSwitch(options => options
+                .SetActivationThreshold(10)
+                .SetTripThreshold(0.15)
+                .SetRestartTimeout(m: 1)
+            );
+
+            e.ConfigureConsumer<MotorcycleCreatedEvent2>(context);
+        });
+
+        cfg.ReceiveEndpoint(e =>
+        {
+            e.UseConcurrencyLimit(1);
+            e.UseRateLimit(50, TimeSpan.FromMinutes(1));
+            e.UseKillSwitch(options => options
+                .SetActivationThreshold(10)
+                .SetTripThreshold(0.15)
+                .SetRestartTimeout(m: 1)
+            );
+
+            e.ConfigureConsumer<MotorcycleCreatedEvent3>(context);
+        });
+
     });
 });
 

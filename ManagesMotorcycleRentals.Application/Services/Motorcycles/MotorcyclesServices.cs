@@ -39,7 +39,13 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 
             if (GetNotification().HasNotifications) return false;
 
-            var motocycle = new MotorcycleCreatedEventDto(Guid.NewGuid(), motorCycleDto.LicensePlate, motorCycleDto.Year, motorCycleDto.Model);
+            var motocycle = new MotorcycleCreatedEventDto
+            {
+                Id = Guid.NewGuid(),
+                LicensePlate = motorCycleDto.LicensePlate,
+                Year = motorCycleDto.Year,
+                Model = motorCycleDto.Model
+            };
             
 
             await _publishEndpoint.Publish(motocycle, motocycle.GetType(), cancellationToken);

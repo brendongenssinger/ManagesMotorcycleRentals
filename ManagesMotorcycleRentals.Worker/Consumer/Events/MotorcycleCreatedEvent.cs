@@ -2,7 +2,7 @@
 using ManagesMotorcycleRentals.Application.DTOs;
 using MassTransit;
 
-namespace ManagesMotorcycleRentals.Worker.Event
+namespace ManagesMotorcycleRentals.Worker.Consumer.Events
 {
     public class MotorcycleCreatedEvent : IConsumer<MotorcycleCreatedEventDto>
     {
@@ -10,12 +10,12 @@ namespace ManagesMotorcycleRentals.Worker.Event
         {
             Console.WriteLine($"MotorcycleCreatedEvent received: {context.Message.LicensePlate}, {context.Message.Model}, {context.Message.Year}"); 
 
-            await context.Send(new MotorcycleMessage()
+            await context.Send(new Uri("queue:motorcycles"),new MotorcycleMessage()
             {
                 LicensePlate = context.Message.LicensePlate,
                 Model = context.Message.Model,
                 Year = context.Message.Year,
-            }, context.CancellationToken);
+            });
 
         }
     }

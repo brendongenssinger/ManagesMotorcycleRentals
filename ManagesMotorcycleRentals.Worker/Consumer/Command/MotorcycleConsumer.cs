@@ -1,9 +1,8 @@
-﻿
-using ManagesMotorcycleRentals.API.Messaging.Model;
+﻿using ManagesMotorcycleRentals.API.Messaging.Model;
 using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using MassTransit;
 
-namespace ManagesMotorcycleRentals.API.Messaging
+namespace ManagesMotorcycleRentals.Worker.Consumer.Command
 {
     public class MotorcycleConsumer : IConsumer<MotorcycleMessage>
     {
@@ -16,6 +15,8 @@ namespace ManagesMotorcycleRentals.API.Messaging
 
         public async Task Consume(ConsumeContext<MotorcycleMessage> context)
         {
+            Console.WriteLine($"[Consumer] : Moto : {context.Message.Model} - {context.Message.LicensePlate} ");
+
             var moto = context.Message;
 
             if (moto is not null && moto.Year == 2024)

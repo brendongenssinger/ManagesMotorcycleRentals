@@ -1,4 +1,5 @@
-﻿using ManagesMotorcycleRentals.Application.Services.Customer;
+﻿using ManagesMotorcycleRentals.Application.DTOs;
+using ManagesMotorcycleRentals.Application.Services.Customer;
 using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Motorcycles;
 using ManagesMotorcycleRentals.Application.Services.PlanRentals;
@@ -10,6 +11,7 @@ using ManagesMotorcycleRentals.Infrastructure.Context;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
 using ManagesMotorcycleRentals.Infrastructure.Repositories;
 using MassTransit;
+using MassTransit.Transports.Fabric;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
@@ -67,8 +69,10 @@ namespace ManagesMotorcycleRentals.API.Configuration
                     {
                         h.Username(configuration.GetSection("RabbitMQ:User").Value ?? string.Empty);
                         h.Password(configuration.GetSection("RabbitMQ:Password").Value ?? string.Empty);                        
-                    });                    
+                    });               
+                   
                 });
+
             });
 
             return services;
