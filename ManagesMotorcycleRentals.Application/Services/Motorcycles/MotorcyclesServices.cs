@@ -1,29 +1,36 @@
-﻿using ManagesMotorcycleRentals.Application.Services.Interfaces;
+﻿using ManagesMotorcycleRentals.API.Messaging.Model;
+using ManagesMotorcycleRentals.Application.DTOs;
+using ManagesMotorcycleRentals.Application.Services.Interfaces;
 using ManagesMotorcycleRentals.Application.Services.Validator;
 using ManagesMotorcycleRentals.Domain.Entities;
 using ManagesMotorcycleRentals.Domain.Shared;
 using ManagesMotorcycleRentals.DTOs;
 using ManagesMotorcycleRentals.Infrastructure.Interfaces;
-using RabbitMQ.Client;
-using System.Text;
+using MassTransit;
 
 namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 {
     public class MotorcyclesServices : ServiceBase, IMotorcyclesServices
     {
-        private IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
-        private MotorcyclesServicesValidator _motorcyclesServicesValidator;
-        private IUnitOfWork _unitOfWork;
+        private readonly IMotorcyclesRepositoryReadOnly _motorcyclesRepositoryReadOnly;
+        private readonly MotorcyclesServicesValidator _motorcyclesServicesValidator;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
         public MotorcyclesServices(
                 IMotorcyclesRepositoryReadOnly motorcyclesRepositoryReadOnly, 
                 MotorcyclesServicesValidator motorcyclesServicesValidator,
                 IUnitOfWork unitOfWork,
+                IBus bus,
+                IPublishEndpoint publishEndpoint,
                 Notify notify) : base(notify) 
         {
             _motorcyclesRepositoryReadOnly = motorcyclesRepositoryReadOnly;
             _motorcyclesServicesValidator = motorcyclesServicesValidator;
             _unitOfWork = unitOfWork;
+            _bus = bus;
+            _publishEndpoint = publishEndpoint;
         }
         public async Task<bool> CreateMotorcycleAsync(MotorCycleCreateDto motorCycleDto, CancellationToken cancellationToken)
         {
@@ -32,19 +39,16 @@ namespace ManagesMotorcycleRentals.Application.Services.Motorcycles
 
             if (GetNotification().HasNotifications) return false;
 
-            var motocycle = MotorcyleFactory.Create(motorCycleDto.Year, motorCycleDto.Model, motorCycleDto.LicensePlate);
+            var motocycle = new MotorcycleCreatedEventDto
+            {
+                Id = Guid.NewGuid(),
+                LicensePlate = motorCycleDto.LicensePlate,
+                Year = motorCycleDto.Year,
+                Model = motorCycleDto.Model
+            };
+            
 
-            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672, UserName = "admin", Password = "admin123" };
-
-
-            using var connection = await factory.CreateConnectionAsync(cancellationToken);
-            using var channel = await connection.CreateChannelAsync();
-
-            await channel.QueueDeclareAsync(queue: "motorcycles", durable: false, exclusive: false, autoDelete: false);
-
-            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(motocycle));
-
-            await channel.BasicPublishAsync(exchange: "",  routingKey: "motorcycles",body,cancellationToken);
+            await _publishEndpoint.Publish(motocycle, motocycle.GetType(), cancellationToken);
 
             return true;
         }
